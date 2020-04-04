@@ -5,6 +5,7 @@
 *#generate public key
 *openssl rsa -in private_key.pem -pubout -out public_key.pem
 */
+include './Util/appUtil.php';
 class appRSA {
 	
 	public static $public_key = <<<EOD
@@ -51,7 +52,7 @@ EOD;
 
 	public static function encryptRSA($data, $array = true) {
 		if($array) {
-    		$data = Util::encodeJSON($data);
+    		$data = appUtil::encodeJSON($data);
 		}
 
 		if (openssl_public_encrypt($data, $encrypted, self::$public_key, OPENSSL_PKCS1_PADDING)) {
@@ -73,7 +74,7 @@ EOD;
 		}
 
 		if($json) {
-			return Util::decodeJSON($data);
+			return appUtil::decodeJSON($data);
 		}
 
 		return $data;
